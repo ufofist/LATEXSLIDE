@@ -1,0 +1,135 @@
+\documentclass{beamer}
+ 
+\usepackage[utf8]{inputenc}
+\usepackage{ctex}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usetheme{Madrid}
+\usecolortheme{default}
+ 
+%Information to be included in the title page:
+\title{Neutron Dosimetry in BNCT}
+\author{Zhongming Zhang}
+\institute{Neuboron}
+\date{2019.3.13}
+ 
+ 
+ 
+\begin{document}
+
+
+\frame{\titlepage}
+\begin{frame}
+\frametitle{Catalog}
+\tableofcontents
+\end{frame}
+
+
+
+\begin{frame}
+\section{Basic Theory}
+\frametitle{Basic Theory}
+\begin{center}
+  \begin{spacing}{2}
+    \begin{table}[H]
+      \footnotesize
+      \begin{tabular}{cc}
+        \toprule  %添加表格头部粗线
+        元素& 相\quad 互\quad 作\quad 用\\
+        \midrule  %添加表格中横线
+        氢& 弹性散射\quad 辐射俘获\quad H(n,gamma)D\\
+        碳& 弹性散射\quad 非弹性散射\quad C(n,n'3$\alpha$)\quad C(n,n'$\alpha$)Be \\
+        氮& 弹性散射\quad 非弹性散射\quad N(n,p)C\quad N(n,d)C等\\
+        氧& 弹性散射\quad 非弹性散射\quad O(n,$\alpha$)C\quad O(n,p)N\\
+        \bottomrule %添加表格底部粗线
+        \end{tabular}
+    \end{table}
+  \end{spacing}
+\end{center}
+\end{frame}
+
+
+\section{Calculation Methods}
+\begin{frame}
+\frametitle{Calculation Methods}
+\framesubtitle{Dosimetry}
+\begin{center}
+  \Large
+  $ Dose(j)= \int \phi(j,E)*Kerma(j,E)\,dE/V(j)  $
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Calculation Methods}
+\framesubtitle{Neutron Flux in MCNP}
+\begin{center}
+\Large
+  $ \phi(j,E) \approx \frac{S_0}{N} \sum_{k=1}^{N} \sum_{m}{w_m}^{(n)}(j,E){d_m}^{(n)}(j)$\\
+  \quad \\
+  $ {w_m}^{(n)}(j,E) = {{w}_{m-1}}^{(n)}(j,E)[ 1- \frac {\sum_{a}^{(m-1)}(j,E)}{\sum_{t}^{(m-1)}(j,E)}]  $
+\end{center}
+\end{frame}
+
+
+\section{Algorithm}
+\begin{frame}
+\frametitle{Algorithm}
+\framesubtitle{Basic flow}
+%\setlength{\parindent}{4em}
+\begin{spacing}{1.5}
+ 1.从CT读取图像文件，获得数据。\\
+ 2.对数据文件进行处理，划分网格（均匀或非均匀）\\
+ 3.计算网格中心点坐标\\
+ 4.通过CT文件可以得知网格中心点的材料与密度，利用中心点方法快速确定该网格的材料与密度。\\
+ 5.生成MCNP 或 蒙卡输入文件。\\
+ 6.获得相应网格的中子通量或中子通量率以及中子能量谱，通过读取数据库的Kerma factors进行剂量计算。\\
+ 7.通过剂量生成相应图表以及图像。
+\end{spacing}
+\end{frame}
+
+\begin{frame}
+\frametitle{Algorithm}
+\framesubtitle{Particle track Algorithm in MCNP}
+\begin{figure}[H]%%图
+	\centering  %插入的图片居中表示
+	\includegraphics[width=0.7\textwidth]{mcnp.jpg}  %插入的图，包括JPG,PNG,PDF,EPS等，放在源文件目录下
+	\caption{Particle track in MCNP}  %图片的名称
+	%\label{fig:mcmthesis-logo}   %标签，用作引用
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Algorithm}
+\framesubtitle{Fast particle track method}
+\begin{figure}[H]%%图
+	\centering  %插入的图片居中表示
+	\includegraphics[width=0.7\textwidth]{track.jpg}  %插入的图，包括JPG,PNG,PDF,EPS等，放在源文件目录下
+	\caption{Fast particle track}  %图片的名称
+	%\label{fig:mcmthesis-logo}   %标签，用作引用
+\end{figure}
+\end{frame}
+  
+
+\begin{frame}
+\section{Challenge}
+\frametitle{Challenge}
+\setlength{\parindent}{4em}
+\begin{spacing}{1.5}
+  1.硼药的浓度变化导致必须加快蒙卡计算速度\\
+  2.混合网格的快速射线轨迹追踪\\
+\end{spacing}
+\end{frame}
+
+
+\begin{frame}
+\begin{center}
+\Huge Thank you !
+\end{center}
+\end{frame}
+ 
+
+\end{document}
